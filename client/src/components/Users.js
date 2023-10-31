@@ -34,7 +34,7 @@ function Users() {
         Authorization: `Bearer ${userData.data.token}`,
       },
     };
-    axios.get("http://localhost:5000/user/fetchUsers", config).then((data) => {
+    axios.get("https://chat-app-dt46.onrender.com/user/fetchUsers/", config).then((data) => {
       // console.log("UData refreshed in Users panel ");
       setUsers(data.data);
       // console.log("Users data",data.data)
@@ -96,7 +96,7 @@ function Users() {
                     },
                   };
                   axios.post(
-                    "http://localhost:5000/chat/",
+                    "https://chat-app-dt46.onrender.com/chat/",
                     {
                       userId: user._id,
                     },
