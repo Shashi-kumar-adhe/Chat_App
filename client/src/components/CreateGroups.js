@@ -20,7 +20,7 @@ function CreateGroups() {
   // console.log("Data from LocalStorage : ", userData);
   const nav = useNavigate();
   if (!userData) {
-    console.log("User not Authenticated");
+    // console.log("User not Authenticated");
     nav("/");
   }
   const user = userData.data;
@@ -35,7 +35,7 @@ function CreateGroups() {
     setOpen(false);
   };
 
-  console.log("User Data from CreateGroups : ", userData);
+  // console.log("User Data from CreateGroups : ", userData);
 
   const createGroup = () => {
     const config = {
@@ -79,6 +79,7 @@ function CreateGroups() {
               onClick={() => {
                 createGroup();
                 handleClose();
+                nav('/app/groups')
               }}
               autoFocus
             >

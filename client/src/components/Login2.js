@@ -34,7 +34,7 @@ function Login() {
         data,
         config
       );
-      console.log("Login : ", response);
+      // console.log("Login : ", response);
       setLogInStatus({ msg: "Success", key: Math.random() });
       setLoading(false);
       localStorage.setItem("userData", JSON.stringify(response));
@@ -62,13 +62,13 @@ function Login() {
         data,
         config
       );
-      console.log(response);
+      // console.log(response);
       setSignInStatus({ msg: "Success", key: Math.random() });
       navigate("/app/welcome");
       localStorage.setItem("userData", JSON.stringify(response));
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (error.response.status === 405) {
         setLogInStatus({
           msg: "User with this email ID already Exists",

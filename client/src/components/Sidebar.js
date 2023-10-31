@@ -25,10 +25,10 @@ function Sidebar() {
   const [conversations, setConversations] = useState([]);
   // console.log("Conversations of Sidebar : ", conversations);
   const userData = JSON.parse(localStorage.getItem("userData"));
-  // console.log("Data from LocalStorage : ", userData);
+  // console.log("Data from LocalStorage sb : ", userData);
   const nav = useNavigate();
   if (!userData) {
-    console.log("User not Authenticated");
+    // console.log("User not Authenticated");
     nav("/");
   }
 
@@ -42,11 +42,12 @@ function Sidebar() {
     };
 
     axios.get("http://localhost:5000/chat/", config).then((response) => {
-      console.log("Data refresh in sidebar ", response.data);
+      // console.log("Data refresh in sidebar ", response.data);
       setConversations(response.data);
+      // console.log("Conversations data:",response.data)
       // setRefresh(!refresh);
     });
-  }, [refresh]);
+  });
 
   return (
     <div className="sidebar-container">
@@ -120,16 +121,29 @@ function Sidebar() {
       <div className={"sb-conversations" + (lightTheme ? "" : " dark")}>
         {conversations.map((conversation, index) => {
           // console.log("current convo : ", conversation);
+          var chatName = "";
+          if(conversation.isGroupChat)
+          {
+            chatName = conversation.chatName;
+          }
+          else{
+            conversation.users.map((user)=>{
+              if(user._id != userData.data._id){
+                chatName = user.name
+              }
+            })
+          }
           if (conversation.users.length === 1) {
             return <div key={index}></div>;
           }
-          if (conversation.latestMessage === undefined) {
+          if (conversation.latestMessage === undefined) 
+          {
             // console.log("No Latest Message with ", conversation.users[1]);
             return (
               <div
                 key={index}
                 onClick={() => {
-                  console.log("Refresh fired from sidebar");
+                  // console.log("Refresh fired from sidebar");
                   // dispatch(refreshSidebarFun());
                   setRefresh(!refresh);
                 }}
@@ -142,16 +156,16 @@ function Sidebar() {
                       "chat/" +
                         conversation._id +
                         "&" +
-                        conversation.users[1].name
+                        chatName
                     );
                   }}
                   // dispatch change to refresh so as to update chatArea
                 >
                   <p className={"con-icon" + (lightTheme ? "" : " dark")}>
-                    {conversation.users[1].name[0]}
+                    {chatName[0]}
                   </p>
                   <p className={"con-title" + (lightTheme ? "" : " dark")}>
-                    {conversation.users[0].name}
+                    {chatName}
                   </p>
                   {/* console.log(conversation.users[1].name); */}
 
@@ -174,15 +188,15 @@ function Sidebar() {
                     "chat/" +
                       conversation._id +
                       "&" +
-                      conversation.users[1].name
+                      chatName
                   );
                 }}
               >
                 <p className={"con-icon" + (lightTheme ? "" : " dark")}>
-                  {conversation.users[0].name[0]}
+                  {chatName[0]}
                 </p>
                 <p className={"con-title" + (lightTheme ? "" : " dark")}>
-                  {conversation.users[0].name}
+                  {chatName}
                 </p>
 
                 <p className="con-lastMessage">

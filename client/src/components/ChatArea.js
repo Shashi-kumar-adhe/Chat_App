@@ -45,7 +45,7 @@ function ChatArea() {
       )
       .then(({ response }) => {
         data = response;
-        console.log("Message Fired");
+        // console.log("Message Fired");
       });
       socket.emit("newmessage",data);
   };
@@ -80,7 +80,7 @@ function ChatArea() {
 
   //fetch Chats
   useEffect(() => {
-    console.log("Users refreshed");
+    // console.log("Users refreshed");
     const config = {
       headers: {
         Authorization: `Bearer ${userData.data.token}`,
@@ -187,6 +187,7 @@ function ChatArea() {
             className={"icon" + (lightTheme ? "" : " dark")}
             onClick={() => {
               sendMessage();
+              setMessageContent("")
               setRefresh(!refresh);
             }}
           >

@@ -22,13 +22,13 @@ function Groups() {
   // console.log("Data from LocalStorage : ", userData);
   const nav = useNavigate();
   if (!userData) {
-    console.log("User not Authenticated");
+    // console.log("User not Authenticated");
     nav("/");
   }
 
   const user = userData.data;
   useEffect(() => {
-    console.log("Users refreshed : ", user.token);
+    // console.log("Users refreshed : ", user.token);
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -38,7 +38,7 @@ function Groups() {
     axios
       .get("http://localhost:5000/chat/fetchGroups", config)
       .then((response) => {
-        console.log("Group Data from API ", response.data);
+        // console.log("Group Data from API ", response.data);
         SetGroups(response.data);
       });
   }, [refresh]);
@@ -90,23 +90,25 @@ function Groups() {
                 className={"list-tem" + (lightTheme ? "" : " dark")}
                 key={index}
                 onClick={() => {
-                  console.log("Creating chat with group", group.name);
-                  // const config = {
-                  //   headers: {
-                  //     Authorization: `Bearer ${userData.data.token}`,
-                  //   },
-                  // };
-                  // axios.post(
-                  //   "http://localhost:5000/chat/",
-                  //   {
-                  //     userId: user._id,
-                  //   },
-                  //   config
-                  // );
+                  // console.log("Creating chat with group", group.name);
+                  const config = {
+                    headers: {
+                      Authorization: `Bearer ${userData.data.token}`,
+                    },
+                  };
+                  axios.put(
+                    "http://localhost:5000/chat/addSelfToGroup",
+                    {
+                      chatId:group._id,
+                      userId: userData.data._id
+                    },
+                    config
+                  );
+                  // console.log("Join to group")
                   dispatch(refreshSidebarFun());
                 }}
               >
-                <p className={"con-icon" + (lightTheme ? "" : " dark")}>T</p>
+                <p className={"con-icon" + (lightTheme ? "" : " dark")}>{group.chatName[0]}</p>
                 <p className={"con-title" + (lightTheme ? "" : " dark")}>
                   {group.chatName}
                 </p>

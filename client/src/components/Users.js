@@ -23,20 +23,21 @@ function Users() {
   const dispatch = useDispatch();
 
   if (!userData) {
-    console.log("User not Authenticated");
+    // console.log("User not Authenticated");
     nav(-1);
   }
 
   useEffect(() => {
-    console.log("Users refreshed");
+    // console.log("Users refreshed");
     const config = {
       headers: {
         Authorization: `Bearer ${userData.data.token}`,
       },
     };
     axios.get("http://localhost:5000/user/fetchUsers", config).then((data) => {
-      console.log("UData refreshed in Users panel ");
+      // console.log("UData refreshed in Users panel ");
       setUsers(data.data);
+      // console.log("Users data",data.data)
       // setRefresh(!refresh);
     });
   }, [refresh]);
@@ -88,7 +89,7 @@ function Users() {
                 className={"list-tem" + (lightTheme ? "" : " dark")}
                 key={index}
                 onClick={() => {
-                  console.log("Creating chat with ", user.name);
+                  // console.log("Creating chat with ", user.name);
                   const config = {
                     headers: {
                       Authorization: `Bearer ${userData.data.token}`,
@@ -104,7 +105,7 @@ function Users() {
                   dispatch(refreshSidebarFun());
                 }}
               >
-                <p className={"con-icon" + (lightTheme ? "" : " dark")}>T</p>
+                <p className={"con-icon" + (lightTheme ? "" : " dark")}>{user.name[0]}</p>
                 <p className={"con-title" + (lightTheme ? "" : " dark")}>
                   {user.name}
                 </p>
